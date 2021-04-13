@@ -34,7 +34,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 /**
  * Implements testing of the CarController class.
  */
@@ -141,6 +141,21 @@ public class CarControllerTest {
     	  mvc.perform(delete(new URI("/cars/1"))
                   .accept(MediaType.APPLICATION_JSON_UTF8))
                   .andExpect(status().isNoContent());
+    }
+    
+    @Test
+    public void updateCar() throws Exception {
+        Car car = getCar();
+        mvc.perform(put(new URI("/cars/1"))
+                        .content(json.write(car).getJson())
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+        mvc.perform(get(new URI("/cars/1"))
+                .content(json.write(car).getJson())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
     }
 
     /**
