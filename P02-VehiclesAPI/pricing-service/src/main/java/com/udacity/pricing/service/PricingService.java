@@ -29,7 +29,7 @@ public class PricingService {
      * @throws PriceException vehicleID was not found
      */
     public static Price getPrice(Long vehicleId) throws PriceException {
-
+		System.out.println(PRICES);
         if (!PRICES.containsKey(vehicleId)) {
             throw new PriceException("Cannot find price for Vehicle " + vehicleId);
         }
